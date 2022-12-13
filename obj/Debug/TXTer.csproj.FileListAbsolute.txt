@@ -1,0 +1,11 @@
+H:\TXTEr\TXTer\bin\Debug\TXTer.exe.config
+H:\TXTEr\TXTer\bin\Debug\TXTer.exe
+H:\TXTEr\TXTer\bin\Debug\TXTer.pdb
+H:\TXTEr\TXTer\obj\Debug\TXTer.csproj.AssemblyReference.cache
+H:\TXTEr\TXTer\obj\Debug\TXTer.csproj.SuggestedBindingRedirects.cache
+H:\TXTEr\TXTer\obj\Debug\TXTer.Form1.resources
+H:\TXTEr\TXTer\obj\Debug\TXTer.Properties.Resources.resources
+H:\TXTEr\TXTer\obj\Debug\TXTer.csproj.GenerateResource.cache
+H:\TXTEr\TXTer\obj\Debug\TXTer.csproj.CoreCompileInputs.cache
+H:\TXTEr\TXTer\obj\Debug\TXTer.exe
+H:\TXTEr\TXTer\obj\Debug\TXTer.pdb
