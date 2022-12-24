@@ -13,7 +13,7 @@ TXTer，一款集成有关txt的功能的小程序。
 目前支持已有：繁简体转换、epub转txt
 To be continued...
 
-![页面截图](1.jpg]
+![页面截图](1.jpg)
 
 联系地址：zym790872137@163.com
 
