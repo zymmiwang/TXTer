@@ -1,15 +1,17 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.Devices;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
 namespace TXTer
 {
     public partial class Form1 : Form
@@ -49,7 +51,7 @@ namespace TXTer
 
             outname = getAry[getAry.Length-1];
 
-            string o = outdir + "\\" + outname;
+            string o = outdir + "\\" + gettime() + '-' + outname;
             string order= "jiantofan.exe " + '"'+ @filename+ '"'+" " + '"' + @o+'"';
             string result = cmd(order).Replace("\n", "");
             if (result.Replace("\r", "") == "ok")
@@ -118,7 +120,7 @@ namespace TXTer
 
             dialog.Multiselect = false;//只选择单个文件
             dialog.Title = "请选择文件";
-            dialog.Filter = "TXT文件(*.txt)|*.txt";//选择某种类型的文件
+            dialog.Filter = "TXT文件(*.txt)|*.txt|EPUB电子书文件(*.epub)|*.epub";//选择某种类型的文件
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 string filename = dialog.FileName;
@@ -146,7 +148,7 @@ namespace TXTer
 
             outname = getAry[getAry.Length - 1];
 
-            string o = outdir + "\\" + outname;
+            string o = outdir + "\\" + gettime()+'-'+outname;
             string order = "fantojian.exe " + '"' + @filename + '"' + " " + '"' + @o + '"';
             string result = cmd(order).Replace("\n","");
             if(result.Replace("\r","") == "ok")
@@ -160,9 +162,88 @@ namespace TXTer
             
         }
 
+
+        private int rename(string dir)
+        {
+            DirectoryInfo directoryinfo = new DirectoryInfo(dir);
+            int i = 1;
+            foreach (var item in directoryinfo.GetFiles())
+            {
+                string aLastName = item.FullName.Substring(item.FullName.LastIndexOf(".") + 1, (item.FullName.Length - item.FullName.LastIndexOf(".") - 1));
+                Computer MyComputer = new Computer();
+                string newname = i.ToString() + "." + aLastName;
+                MyComputer.FileSystem.RenameFile(item.FullName, newname);
+                i++;
+                
+            }
+            return i;
+        }
+
+
+       
+
+
+
+
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            if (outdir == null)
+            {
+                MessageBox.Show("请选择输出目录！");
+                return;
+            }
+
+
+            if (filename == null)
+            {
+                MessageBox.Show("请选择EPUB文件！");
+                return;
+
+            }
+
+            string[] getAry = filename.Split('\\');
+
+            outname = getAry[getAry.Length - 1];
+
+            outname = outname.Substring(0,outname.Length-4)+"txt";
+
+            string o = outdir + "\\" + gettime() + '-' + outname;
+            string order = "epubtotxt.exe " + '"' + @filename + '"' + " " + '"' + @o + '"';
+            string result = cmd(order).Replace("\n", "");
+            if (result.Replace("\r", "") == "ok")
+            {
+                MessageBox.Show("转换完成！");
+            }
+            else
+            {
+                MessageBox.Show("转换失败！");
+            }
+
+
+            //MessageBox.Show(num.ToString());
+        }
+
+
+
         private void button2_Click(object sender, EventArgs e)
         {
             filename=selectfile();
+            if (filename == null) return;
+            string[] f = filename.Split('.');
+            string type = f[f.Length - 1].ToLower();
+            if (type == "epub")
+            {
+                button1.Enabled = false;
+                button4.Enabled = false;
+                button5.Enabled = true;
+            }
+            else if (type == "txt")
+            {
+                button5.Enabled = false;
+                button1.Enabled = true;
+                button2.Enabled = true;
+            }
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -174,5 +255,15 @@ namespace TXTer
                 outdir = folder.SelectedPath;
             }
         }
+
+
+        private string gettime()
+        {
+            string time = DateTime.Now.ToString().Replace("/", "");
+            time = time.Replace(":", "");
+            time = time.Replace("-", "");
+            return time.Replace(" ", "");
+        }
+
     }
 }
