@@ -26,6 +26,8 @@ namespace TXTer
 
         }
 
+
+        //jian2fan
         private void button1_Click(object sender, EventArgs e)
         {
 
@@ -52,7 +54,7 @@ namespace TXTer
             outname = getAry[getAry.Length-1];
 
             string o = outdir + "\\" + gettime() + '-' + outname;
-            string order= "jiantofan.exe " + '"'+ @filename+ '"'+" " + '"' + @o+'"';
+            string order= "jianfan.exe jian2fan " + '"'+ @filename+ '"'+" " + '"' + @o+'"';
             string result = cmd(order).Replace("\n", "");
             if (result.Replace("\r", "") == "ok")
             {
@@ -129,6 +131,7 @@ namespace TXTer
             return null;
         }
 
+        //fan2jian
         private void button4_Click(object sender, EventArgs e)
         {
             if (outdir == null)
@@ -149,7 +152,7 @@ namespace TXTer
             outname = getAry[getAry.Length - 1];
 
             string o = outdir + "\\" + gettime()+'-'+outname;
-            string order = "fantojian.exe " + '"' + @filename + '"' + " " + '"' + @o + '"';
+            string order = "jianfan.exe fan2jian " + '"' + @filename + '"' + " " + '"' + @o + '"';
             string result = cmd(order).Replace("\n","");
             if(result.Replace("\r","") == "ok")
             {
@@ -242,7 +245,7 @@ namespace TXTer
             {
                 button5.Enabled = false;
                 button1.Enabled = true;
-                button2.Enabled = true;
+                button4.Enabled = true;
             }
         }
 
