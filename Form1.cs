@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualBasic.Devices;
+﻿using Microsoft.VisualBasic;
+using Microsoft.VisualBasic.Devices;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -122,7 +123,7 @@ namespace TXTer
 
             dialog.Multiselect = false;//只选择单个文件
             dialog.Title = "请选择文件";
-            dialog.Filter = "TXT文件(*.txt)|*.txt|EPUB电子书文件(*.epub)|*.epub";//选择某种类型的文件
+            dialog.Filter = "TXT文件和EPUB电子书文件(*.txt,*.epub)|*.txt;*.epub";//选择某种类型的文件
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 string filename = dialog.FileName;
@@ -239,6 +240,7 @@ namespace TXTer
             {
                 button1.Enabled = false;
                 button4.Enabled = false;
+                button6.Enabled = false;
                 button5.Enabled = true;
             }
             else if (type == "txt")
@@ -246,6 +248,38 @@ namespace TXTer
                 button5.Enabled = false;
                 button1.Enabled = true;
                 button4.Enabled = true;
+                button6.Enabled = true;
+            }
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            if (outdir == null)
+            {
+                MessageBox.Show("请选择输出目录！");
+                return;
+            }
+
+
+            if (filename == null)
+            {
+                MessageBox.Show("请选择TXT文件！");
+                return;
+
+            }
+            string num = Interaction.InputBox("请输入分割后TXT个数。（注意：分割将以行为单位，如文本行数较少，不建议用该功能。）", "分割个数", "3", -1, -1);
+            if (num.Length != 0)
+            {
+                string order = "txtdivide.exe " + '"' + @filename + '"' + " " + '"' + outdir + '"'+" "+num;
+                string result = cmd(order).Replace("\n", "");
+                if (result.Replace("\r", "") == "ok")
+                {
+                    MessageBox.Show("分割完成！");
+                }
+                else
+                {
+                    MessageBox.Show("分割失败！");
+                }
             }
         }
 
