@@ -10,7 +10,8 @@ TXTer，一款集成有关txt的功能的小程序。
 
 基于此，作者试图通过C#+python的方式，取两者之长，编写一款集成txt绝大多数功能需求的小程序。
 
-目前支持已有：繁简体转换、epub转txt
+目前支持已有：繁简体转换、epub转txt、txt分割（以行为单位）
+
 To be continued...
 
 ![页面截图](https://raw.githubusercontent.com/zymmiwang/TXTer/main/1.jpg)
